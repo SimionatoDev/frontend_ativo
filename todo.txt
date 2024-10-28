@@ -1,0 +1,2 @@
+Bo cadastro de inventário não existe validação no front-end das "data", somente no back-end.
+

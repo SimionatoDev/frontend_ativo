@@ -1,0 +1,5 @@
+ng build --output-path  docs  --base-href  https://falconii.github.io/simionato_ativo_frontend/
+
+copy "C:\Repositorios\Simionato\ativo web\simionato_ativo_frontend\docs\index.html" "C:\Repositorios\Simionato\ativo web\simionato_ativo_frontend\docs\404.html"
+
+

@@ -1,0 +1,105 @@
+<div>
+  <app-imoinventario-view [lancamento]="lancamento" [ccs]="ccs" [idAcao]="idAcao" (submmit)="onProcessar($event)"
+    *ngIf="!browse">
+  </app-imoinventario-view>
+</div>
+<div class="div-barra" *ngIf="browse">
+  <mat-toolbar>
+    <span class="example-spacer">Inventário: {{inventario.descricao}} {{targetRowId}} </span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="novaConsulta()" matTooltip="Atualizar" matTooltipPosition="above">
+      <mat-icon>rotate_right</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+      (click)="onHome()" matTooltip="Retorno" matTooltipPosition="above">
+      <mat-icon>home</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<app-filtro-imoinventario  PARAMNAME = "paramimoinv" [HIDE]="hide" [EMAIL]="true" [DOWNLOAD]="true" [CONTROLE_PAGINAS]="controlePaginas" (changeParametro)="onChangeParametros($event)" (changeHide)="onChangeHide($event)" *ngIf="browse"></app-filtro-imoinventario>
+<table class="Browse_Lanc"  *ngIf="browse">
+  <tr class="coluna-cabec">
+    <th>Cód Imobil.</th>
+    <th>Descrição/CC</th>
+    <th>Novos</th>
+    <th>Lançamento</th>
+    <th>NFE & Serie</th>
+    <th>AÇÕES</th>
+  </tr>
+  <tr *ngFor="let imo of imoinv let i = index" >
+    <td [class.highlight]="imo.id_imobilizado == targetRowId">
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.id_imobilizado}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.imo_origem | origem}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.status | situacao}}</mat-label>
+      </div>
+    </td>
+    <td [class.highlight]="imo.id_imobilizado == targetRowId">
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.imo_descricao}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.imo_cod_cc | ccpipe}}-{{imo.cc_descricao | embrancopipe}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.grupo_descricao}}</mat-label>
+      </div>
+      <div *ngIf="imo.lanc_obs.trim().length > 0">
+        <mat-label class="Browse_Lanc_td">OBS:{{imo.lanc_obs}}</mat-label>
+      </div>
+    </td>
+    <td [class.highlight]="imo.id_imobilizado == targetRowId">
+      <div>
+        <mat-label class="Browse_Lanc_td">Cód:{{imo.new_codigo | zerotospacepipe}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td"  [matTooltip]="imo.new_cc_descricao" matTooltipPosition="above">
+          C.C.:{{imo.new_cc | ccpipe}}
+        </mat-label>
+      </div>
+    </td>
+    <td [class.highlight]="imo.id_imobilizado == targetRowId">
+      <div>
+        <mat-label class="Browse_Lanc_td">Lanç:{{imo.id_lanca | zerotospacepipe}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">Resp:{{imo.usu_razao | firstName}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">Data:{{imo.lanc_dt_lanca}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">Cond.:{{imo.lanc_condicao | condicaopipe}}</mat-label>
+      </div>
+      <div>
+        <mat-label class="Browse_Lanc_td">Book.:{{imo.lanc_book | simNao}}</mat-label>
+      </div>
+    </td>
+    <td [class.highlight]="imo.id_imobilizado == targetRowId">
+      <div>
+        <mat-label class="Browse_Lanc_td">{{imo.imo_nfe}}-{{imo.imo_serie}}</mat-label>
+      </div>
+    </td>
+    <td class="acoes" [class.highlight]="imo.id_imobilizado == targetRowId">
+      <barra-acoes [EXCLUIR]="imo.id_lanca > 0" [CONSULTAR]="imo.id_lanca > 0" [FOTOS]="false" [BARRA_VERTICAL]="true"
+        [BARRA_NFE]="imo.imo_nfe !== ''" [BARRA_VALORES]="true" [BARRA_EXCLUIR]="false" [BARRA_ATIVIDADES]="false"
+        (changeOpcao)="escolha($event,imo)">
+      </barra-acoes>
+    </td>
+  </tr>
+</table>
+<div class="div-barra" *ngIf="browse">
+  <mat-toolbar>
+    <span class="example-spacer">Inventário: {{inventario.descricao}}</span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="onTopoPagina()" matTooltip="Topo Da Página" matTooltipPosition="above">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

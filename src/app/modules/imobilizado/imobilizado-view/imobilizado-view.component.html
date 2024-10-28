@@ -1,0 +1,84 @@
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">
+      <mat-label>{{labelCadastro}}</mat-label>
+    </span>
+    <div class="button-container-right">
+      <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="idAcao != 3">
+        <mat-icon>check</mat-icon>
+        {{acao}}
+      </button>
+      <button mat-raised-button color="accent" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        {{getLabelCancel()}}
+      </button>
+    </div>
+  </mat-toolbar>
+</div>
+<form [formGroup]="formulario" autocomplete="off">
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="codigo" [readonly]="( !(idAcao == getAcoes()[ 'Inclusao']) )">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+      <mat-error *ngIf="NoValidtouchedOrDirty('descricao')">{{getMensafield('descricao')}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-med-2">
+    <mat-form-field field appearance="outline" class="col-max column-span-2"
+      *ngIf="( (idAcao != getAcoes()[ 'Consulta']) && (idAcao != getAcoes()[ 'Exclusao']) && (idAcao != getAcoes()[ 'Atualizacao']))">
+      <mat-label>Grupo</mat-label>
+      <mat-select formControlName="grupo">
+        <mat-option *ngFor="let grupo of grupos" [value]="grupo.codigo">
+          {{grupo.descricao}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="NoValidtouchedOrDirty('grupo')">{{getMensafield('grupo')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max column-span-2"
+      *ngIf="( (idAcao == getAcoes()[ 'Consulta']) || (idAcao == getAcoes()[ 'Exclusao']) )">
+      <mat-label>Grupo</mat-label>
+      <input matInput formControlName="grupo_" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max column-span-2"
+      *ngIf="( (idAcao != getAcoes()[ 'Consulta']) && (idAcao != getAcoes()[ 'Exclusao']) && (idAcao != getAcoes()[ 'Atualizacao']))">
+      <mat-label>Centro De Custo</mat-label>
+      <mat-select formControlName="cc">
+        <mat-option *ngFor="let cc of ccs" [value]="cc.codigo">
+          {{cc.descricao}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="NoValidtouchedOrDirty('cc')">{{getMensafield('cc')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max column-span-2"
+      *ngIf="( (idAcao == getAcoes()[ 'Consulta']) || (idAcao == getAcoes()[ 'Exclusao']) )">
+      <mat-label>Centro De Custo</mat-label>
+      <input matInput formControlName="cc_" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-2">
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao != getAcoes()[ 'Consulta']) && (idAcao != getAcoes()[ 'Exclusao']) && (idAcao != getAcoes()[ 'Atualizacao']))">
+      <mat-label>Condicao</mat-label>
+      <mat-select formControlName="condicao">
+        <mat-option *ngFor="let condicao of lsCondicoes" [value]="condicao.idx">
+          {{condicao.descricao}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="NoValidtouchedOrDirty('condicao')">{{getMensafield('condicao')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao == getAcoes()[ 'Consulta']) || (idAcao == getAcoes()[ 'Exclusao']) )">
+      <mat-label>Condicao</mat-label>
+      <input matInput formControlName="condicao_" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Apelido</mat-label>
+      <input matInput formControlName="apelido" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+      <mat-error *ngIf="NoValidtouchedOrDirty('apelido')">{{getMensafield('apelido')}}</mat-error>
+    </mat-form-field>
+  </div>
+</form>

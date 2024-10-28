@@ -1,0 +1,43 @@
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">Consulta De Fotos</span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="getImoIvenContador()" matTooltip="Atualizar" matTooltipPosition="above">
+      <mat-icon>rotate_right</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+      (click)="onHome()" matTooltip="Retorno" matTooltipPosition="above">
+      <mat-icon>home</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<app-filtro-imoinventario  PARAMNAME = "paramimoinv" [HIDE]="hide"  [CONTROLE_PAGINAS]="controlePaginas" (changeParametro)="onChangeParametros($event)" (changeHide)="onChangeHide($event)"></app-filtro-imoinventario>
+<div *ngIf="fotos.length > 0 && listaAtivos.length > 0">
+  <ul>
+    <i *ngFor="let imo of imoinv">
+      <div class="alinha_esquerda">
+        <mat-label class="Browse_Lanc_td">Código Antigo: {{imo.id_imobilizado}} Código Novo: {{imo.new_codigo}} Ativo:{{imo.imo_descricao}}</mat-label>
+      </div>
+      <div class="alinha_esquerda">
+        <mat-label class="Browse_Lanc_td">Ativo:{{imo.imo_descricao}}</mat-label>
+      </div>
+      <div class="alinha_esquerda">
+        <mat-label class="Browse_Lanc_td">Obs:{{imo.lanc_obs}}</mat-label>
+      </div>
+      <div>
+        <app-browser-foto [FOTOS]="getFotosAtivo(imo.id_imobilizado)"></app-browser-foto>
+      </div>
+    </i>
+  </ul>
+</div>
+<div class="div-barra"  *ngIf="fotos.length > 0 && listaAtivos.length > 0">
+  <mat-toolbar>
+    <span class="example-spacer">Consulta De Fotos</span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="onTopoPagina()" matTooltip="Topo Da Página" matTooltipPosition="above">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

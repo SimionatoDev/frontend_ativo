@@ -1,0 +1,20 @@
+<table class="Browse_Lanc">
+  <tr *ngFor="let foto of fotos">
+    <td *ngIf="itsOK(0,foto)">
+      <div class="alinha_esquerda">
+        <img src="https://drive.google.com/thumbnail?id={{foto.fotos[0].id_file}}&sz=w400">
+      </div>
+    </td>
+    <td *ngIf="itsOK(1,foto)">
+      <div class="alinha_esquerda">
+        <img src="https://drive.google.com/thumbnail?id={{foto.fotos[1].id_file}}&sz=w400">
+      </div>
+    </td>
+    <td *ngIf="itsOK(2,foto)">
+      <div class="alinha_esquerda">
+        <img src="https://drive.google.com/thumbnail?id={{foto.fotos[2].id_file}}&sz=w400">
+      </div>
+ </td>
+  </tr>
+</table>
+<mat-divider class="material-devider"></mat-divider>

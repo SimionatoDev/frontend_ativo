@@ -1,0 +1,17 @@
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">Upload De Base De Dados:</span>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Retorno"
+      matTooltipPosition="above" (click)="onHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div class="box">
+  <h1 class="cabec">Rotina Para Importar Planilhas EXCEL ".CVS" Para Base De Dados</h1>
+  <h1 class="cabec">Serão Importados Para A Base Da Empresa {{empresa.razao}} Local {{local.razao}}</h1>
+</div>
+<div class="custom-file">
+  <input type="file" id="customfile" (change)="onUpLoad($event)" />
+  <label class="custom-file-label" for="customfile">Selecionar</label>
+</div>

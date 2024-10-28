@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Local Padrão</h1>
+<form [formGroup]="formulario">
+  <div class="col-med-1">
+    <mat-form-field field appearance="outline" class="col-max">
+      <mat-label>Local</mat-label>
+      <mat-select formControlName="local">
+        <mat-option *ngFor="let local of data.locais" [value]="local.id">
+          {{local.razao}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
+<div class="button-container-right">
+  <button mat-raised-button color="accent" cdkFocusInitial (click)="closeModal()">
+    <mat-icon>cancel</mat-icon>
+    Cancelar
+  </button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" (click)="actionFunction()" *ngIf="itsOk()">
+    <mat-icon>check</mat-icon>
+    Escolher
+  </button>
+</div>
+<div>
+
+</div>

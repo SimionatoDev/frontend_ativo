@@ -1,0 +1,19 @@
+<div class="mensagem" *ngIf="showMensagem">
+
+  <mat-label class="labelTitleFirst">Empresa:</mat-label>
+  <mat-label class="labelData">{{lbEmpresa}}</mat-label>
+
+  <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Alterar Local"
+    matTooltipPosition="above" (click)="onGetLocais()">
+    <mat-icon class="green-icon">edit</mat-icon>
+  </button>
+  <mat-label class="labelTitleFirst">Local:</mat-label>
+  <mat-label class="labelData">{{lbLocal}}</mat-label>
+
+  <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Alterar Inventário"
+    matTooltipPosition="above" (click)="onGetInventarios()">
+    <mat-icon class="blue-icon">edit</mat-icon>
+  </button>
+  <mat-label class="labelTitleFirst">Inventario:</mat-label>
+  <mat-label class="labelData">{{lbInventario}}</mat-label>
+</div>

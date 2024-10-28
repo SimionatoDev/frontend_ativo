@@ -1,0 +1,23 @@
+.coluna-cabec-gerador {
+    background-color: #acb0b8;
+    text-align: left;
+    height: max-content;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2aa;
+}
+
+tr:hover {
+    background-color: rgb(202, 169, 157);
+}
+
+tr:hover {
+    background-color: rgb(202, 169, 157);
+}
+
+.parametros {
+    padding: 3px;
+    font-size: medium;
+    color: aqua;
+}

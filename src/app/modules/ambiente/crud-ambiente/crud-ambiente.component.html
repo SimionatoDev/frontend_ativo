@@ -1,0 +1,94 @@
+<div class="div-barra">
+    <mat-toolbar>
+        <span class="example-spacer">Ambientes:</span>
+        <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Retorno" matTooltipPosition="above" (click)="onHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+    </mat-toolbar>
+</div>
+<div class="parametros box">
+    <form [formGroup]="parametros" autocomplete="off" class="col-med-4">
+        <mat-form-field field appearance="outline" class="col-max">
+            <mat-label>Empresa</mat-label>
+            <mat-select formControlName="empresa" (selectionChange)="onChangeEmpresa()">
+                <mat-option *ngFor="let emp of empresas" [value]="emp.id">
+                    {{emp.razao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field field appearance="outline" class="col-max">
+            <mat-label>Local</mat-label>
+            <mat-select formControlName="local" (selectionChange)="onChangeLocal()">
+                <mat-option *ngFor="let local of locais" [value]="local.id">
+                    {{local.razao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field field appearance="outline" class="column-span-2">
+            <mat-label>Inventário</mat-label>
+            <mat-select formControlName="inventario">
+                <mat-option *ngFor="let inventario of inventarios" [value]="inventario.codigo">
+                    {{inventario.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="button-container-right">
+        <button mat-raised-button color="primary" (click)="getUsuarios()">
+      Usuários
+    </button>
+    </div>
+</div>
+<div *ngIf="usuarios.length > 0">
+    <table class="Browse_Lanc box">
+        <tr class="coluna-cabec-gerador">
+            <th>
+                <mat-label class="Browse_Lanc_td">Código</mat-label>
+            </th>
+            <th>
+                <div>
+                    <mat-label class="Browse_Lanc_td">Nome</mat-label>
+                </div>
+            </th>
+            <th>
+                <div>
+                    <mat-label class="Browse_Lanc_td">Ambiente</mat-label>
+                </div>
+            </th>
+            <th>
+                <div>
+                    <mat-label class="Browse_Lanc_td">Ação</mat-label>
+                </div>
+            </th>
+        </tr>
+        <tr *ngFor="let usuario of usuarios">
+            <td>
+                <div>
+                    <mat-label class="Browse_Lanc_td">{{usuario.id}}</mat-label>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <mat-label class="Browse_Lanc_td">{{usuario.razao}}</mat-label>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <mat-label class="Browse_Lanc_td">{{usuario.empresa}}</mat-label>
+                </div>
+                <div>
+                    <mat-label class="Browse_Lanc_td">{{usuario.local}}</mat-label>
+                </div>
+                <div>
+                    <mat-label class="Browse_Lanc_td">{{usuario.inventario}}</mat-label>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <barra-acoes-ambiente [INCLUIR_AMBIENTE]="true" [EXCLUIR_AMBIENTE]="usuario.tem_padrao=='S'" (changeOpcao)="escolha($event,usuario)">
+                    </barra-acoes-ambiente>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

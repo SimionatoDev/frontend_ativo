@@ -1,0 +1,18 @@
+.content {
+    height: 95%;
+    overflow: auto;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2aa;
+}
+
+tr:hover {
+    background-color: rgb(202, 169, 157);
+}
+
+
+
+.highlight {
+  background-color: rgb(229, 139, 139);
+}

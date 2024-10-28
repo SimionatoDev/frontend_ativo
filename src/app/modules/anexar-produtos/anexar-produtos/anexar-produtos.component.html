@@ -1,0 +1,69 @@
+<div class="div-barra">
+    <mat-toolbar>
+        <span class="example-spacer">Anexar Produtos Ao Inventário:</span>
+        <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Retorno" matTooltipPosition="above" (click)="onHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+    </mat-toolbar>
+</div>
+<div class="parametros box">
+    <form [formGroup]="parametros" autocomplete="off" class="col-med-4">
+        <mat-form-field field appearance="outline" class="col-max">
+            <mat-label>Empresa</mat-label>
+            <mat-select formControlName="empresa" (selectionChange)="onChangeEmpresa()">
+                <mat-option *ngFor="let emp of empresas" [value]="emp.id">
+                    {{emp.razao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field field appearance="outline" class="col-max">
+            <mat-label>Local</mat-label>
+            <mat-select formControlName="local" (selectionChange)="onChangeLocal()">
+                <mat-option *ngFor="let local of locais" [value]="local.id">
+                    {{local.razao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field field appearance="outline" class="column-span-2">
+            <mat-label>Inventário</mat-label>
+            <mat-select formControlName="inventario">
+                <mat-option *ngFor="let inventario of inventarios" [value]="inventario.codigo">
+                    {{inventario.descricao}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="button-container-right">
+        <button mat-raised-button color="primary" (click)="onValidar()">
+      Verificar
+    </button>
+    </div>
+</div>
+<div class="parametros box" *ngIf="verificado">
+    <form [formGroup]="resumo" autocomplete="off">
+        <div class="col-med-3">
+            <mat-form-field appearance="outline" class="col-max">
+                <mat-label>TOTAL DE PRODUTOS</mat-label>
+                <input matInput formControlName="total_produtos" [readonly]="true">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-max">
+                <mat-label>TOTAL DE PRODUTOS ANEXADOS</mat-label>
+                <input matInput formControlName="total_produtos_anexados" [readonly]="true">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-max">
+                <mat-label>TOTAL DE PRODUTOS A ANEXAR</mat-label>
+                <input matInput formControlName="total_produtos_anexar" [readonly]="true">
+            </mat-form-field>
+        </div>
+    </form>
+    <div class="button-container-right">
+        <button mat-raised-button color="primary" (click)="onProcessar()" *ngIf="anexar">
+      <mat-icon>check</mat-icon>
+      Processar
+    </button>
+        <button mat-raised-button color="accent" (click)="onCancelar()">
+      <mat-icon>cancel</mat-icon>
+      Cancelar
+    </button>
+    </div>
+</div>

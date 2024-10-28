@@ -1,0 +1,17 @@
+.mensagem {
+    flex: 1 1 auto;
+    justify-items: left;
+    background-color: rgb(158, 202, 241);
+    padding-left: 5px;
+}
+
+.labelTitleFirst {
+    font-size: small;
+    color: red
+}
+
+.labelTitle {
+    font-size: small;
+    color: #0000CC;
+    margin-left: 5px;
+}

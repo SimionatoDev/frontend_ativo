@@ -1,0 +1,8 @@
+.cabec {
+    display: flex;
+    justify-content: center;
+    height: min-content;
+    font-size: medium;
+    color: blue;
+    width: 100%;
+}

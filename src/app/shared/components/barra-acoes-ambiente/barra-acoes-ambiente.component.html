@@ -1,0 +1,10 @@
+<div class="barras2">
+  <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Incluir Ambiente"
+    (click)="onChangeOpcao(getAcoes().Inclusao_Ambiente)" *ngIf="incluir" matTooltipPosition="above">
+    <mat-icon class="icon-size">add_comment</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Example icon-button with share icon " class="botoes" matTooltip="Excluir Ambiente"
+    matTooltipPosition="above" *ngIf="excluir" class="botoes" (click)="onChangeOpcao(getAcoes().Exclusao_Ambiente)">
+    <mat-icon class="icon-size">delete</mat-icon>
+  </button>
+</div>

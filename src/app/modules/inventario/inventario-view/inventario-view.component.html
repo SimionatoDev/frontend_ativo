@@ -1,0 +1,78 @@
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">
+      <mat-label>{{labelCadastro}}</mat-label>
+    </span>
+    <div class="button-container-right">
+      <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="idAcao != 3">
+        <mat-icon>check</mat-icon>
+        {{acao}}
+      </button>
+      <button mat-raised-button color="accent" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        {{getLabelCancel()}}
+      </button>
+    </div>
+  </mat-toolbar>
+</div>
+<form [formGroup]="formulario" autocomplete="off">
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-70">
+      <mat-label>ID</mat-label>
+      <input matInput formControlName="id">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao" oninput="this.value = this.value.toUpperCase()" autofocus
+        [readonly]="readOnly">
+      <mat-error *ngIf="getValidfield('descricao')">{{getMensafield('descricao')}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Inicial</mat-label>
+      <input matInput formControlName="data_inicial" mask="00/00/0000" placeholder="00/00/0000" [readonly]="readOnly">
+      <mat-error *ngIf="getValidfield('data_inicial')">{{getMensafield('data_inicial')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Final</mat-label>
+      <input matInput formControlName="data_final" mask="00/00/0000" placeholder="21/11/1987" [readonly]="readOnly">
+      <mat-error *ngIf="getValidfield('data_final')">{{getMensafield('data_final')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Encerramento</mat-label>
+      <input matInput formControlName="data_encerramento" readonly=true>
+    </mat-form-field>
+  </div>
+  <div class="col-med-2">
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao != getAcoes()[ 'Consulta']) && (idAcao != getAcoes()[ 'Exclusao']))">
+      <mat-label>Local</mat-label>
+      <mat-select formControlName="id_filial">
+        <mat-option *ngFor="let local of locais" [value]="local.id">
+          {{local.razao}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="NoValidtouchedOrDirty('id_filial')">{{getMensafield('id_filial')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao == getAcoes()[ 'Consulta']) || (idAcao == getAcoes()[ 'Exclusao']) )">
+      <mat-label>Local</mat-label>
+      <input matInput formControlName="id_filial_" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao != getAcoes()[ 'Consulta']) && (idAcao != getAcoes()[ 'Exclusao']))">
+      <mat-label>Responsável</mat-label>
+      <mat-select formControlName="responsavel">
+        <mat-option *ngFor="let responsavel of responsaveis" [value]="responsavel.id">
+          {{responsavel.razao}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max"
+      *ngIf="( (idAcao == getAcoes()[ 'Consulta']) || (idAcao == getAcoes()[ 'Exclusao']) )">
+      <mat-label>Responsável</mat-label>
+      <input matInput formControlName="responsavel_" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+</form>

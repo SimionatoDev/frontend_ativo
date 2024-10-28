@@ -1,0 +1,81 @@
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">Usuários Do Inventário</span>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltip="Página Inicial"
+      matTooltipPosition="above" (click)="onHome()">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" matTooltip="Retorno"
+      matTooltipPosition="above" (click)="onRetorno()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<form [formGroup]="formulario" autocomplete="off">
+  <div class="box padding">
+    <h3 class="alinha_centro">ROTINA PARA ASSOCIAR O USUÁRIO AO INVENTÁRIO</h3>
+    <div class="col-med-3">
+      <mat-form-field appearance="outline" class="col-max">
+        <mat-label>Código</mat-label>
+        <input matInput formControlName="codigo" [readonly]="readOnly">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="column-span-2">
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="descricao" [readonly]="readOnly">
+      </mat-form-field>
+    </div>
+    <div *ngIf="displayAuditores.length > 0">
+      <table class="Browse_Lanc">
+        <tr class="coluna-cabec-gerador">
+          <th class="acoes">
+            <div>
+              <mat-checkbox [checked]=displayAuditores[0].checked (change)="setAllItens($event.checked)" color="accent">
+                <mat-label class="Browse_Lanc_td">TODOS</mat-label>
+              </mat-checkbox>
+            </div>
+          </th>
+          <th>
+            <mat-label class="Browse_Lanc_td">Auditores</mat-label>
+          </th>
+          <th class="pontes">
+            <div>
+              <mat-label class="Browse_Lanc_td">Pontes</mat-label>
+            </div>
+          </th>
+          <th class="acoes">
+            <div>
+              <mat-label class="Browse_Lanc_td">Ação</mat-label>
+            </div>
+          </th>
+        </tr>
+        <tr *ngFor="let auditor of getVisiblesAuditores()">
+          <td>
+          </td>
+          <td>
+            <div *ngIf="!auditor.vazia">
+              <mat-checkbox [checked]=auditor.checked color="accent" (change)="setItens($event.checked,auditor)">
+                <mat-label class="Browse_Lanc_td">
+                  {{auditor.auditor.razao}}
+                </mat-label>
+              </mat-checkbox>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="!auditor.vazia">
+              <mat-label class="Browse_Lanc_td">{{auditor.auditor.inventario}}</mat-label>
+            </div>
+          </td>
+          <td>
+            <div>
+              <mat-label class="Browse_Lanc_td">{{auditor.acao | cadastroAcoesPipe}}</mat-label>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="button-container-right">
+      <button mat-raised-button color="primary" (click)="onSaveUsuariosInventarios()">Gravar</button>
+      <button mat-raised-button color="accent">Cancelar</button>
+    </div>
+  </div>
+</form>

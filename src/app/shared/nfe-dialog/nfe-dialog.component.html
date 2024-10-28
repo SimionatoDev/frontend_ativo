@@ -1,0 +1,101 @@
+<p>
+  <mat-toolbar>
+    <span class="example-spacer">
+      <mat-label>{{labelCadastro}}</mat-label>
+    </span>
+    <div class="button-container-right">
+      <button mat-raised-button color="primary" *ngIf="idAcao != 3">
+        <mat-icon>check</mat-icon>
+        {{acao}}
+      </button>
+      <button mat-raised-button color="accent" (click)="closeModal()">
+        <mat-icon>cancel</mat-icon>
+        {{getLabelCancel()}}
+      </button>
+    </div>
+  </mat-toolbar>
+</p>
+<form [formGroup]="formulario" autocomplete="off">
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-70">
+      <mat-label>Cód Imobilizado</mat-label>
+      <input matInput formControlName="id_imobilizado">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="imo_descricao" oninput="this.value = this.value.toUpperCase()" autofocus
+        [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-70">
+      <mat-label>Cnpj Fornecedor</mat-label>
+      <input matInput formControlName="cnpj_fornecedor" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Razão Fornecedor</mat-label>
+      <input matInput formControlName="razao_fornecedor">
+    </mat-form-field>
+  </div>
+  <div class="col-med-2">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Emissão</mat-label>
+      <input matInput formControlName="dtemissao" mask="00/00/0000" placeholder="21/11/1987" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Lançamento</mat-label>
+      <input matInput formControlName="dtlancamento" mask="00/00/0000" placeholder="21/11/1987" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-4">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Nfe</mat-label>
+      <input matInput formControlName="nfe" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Serie</mat-label>
+      <input matInput formControlName="serie" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Item</mat-label>
+      <input matInput formControlName="item" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Chave Eletrônica</mat-label>
+      <input matInput formControlName="chavee" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Qtd</mat-label>
+      <input matInput formControlName="qtd" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Preço Unit.</mat-label>
+      <input matInput formControlName="punit" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Total Do Item</mat-label>
+      <input matInput formControlName="totalitem" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-4">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Vlr Contabil</mat-label>
+      <input matInput formControlName="vlrcontabil" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Base Icms</mat-label>
+      <input matInput formControlName="baseicms" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Perc. Icms</mat-label>
+      <input matInput formControlName="percicms" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Valor Icms Icms</mat-label>
+      <input matInput formControlName="vlrcicms" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+</form>

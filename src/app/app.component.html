@@ -1,0 +1,70 @@
+<div>
+  <mat-toolbar color="primary" class="div-barra">
+    <button routerLink="" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+      (click)="setOpcao('')">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Simionato Auditores</span>
+    <span *ngIf="showMenu">
+      <button mat-button [matMenuTriggerFor]="cadastros">Cadastros</button>
+      <button mat-button [matMenuTriggerFor]="locais">Locais</button>
+      <button mat-button [matMenuTriggerFor]="inventarios">Inventários</button>
+      <button mat-button [matMenuTriggerFor]="gerencial">Gerencial</button>
+      <button mat-button [matMenuTriggerFor]="sobre">Sobre</button>
+    </span>
+    <span>
+      <!-- #docregion sub-menu -->
+      <mat-menu #cadastros="matMenu">
+        <button mat-menu-item routerLink="empresas">Empresas</button>
+        <button mat-menu-item routerLink="usuarios">Usuários</button>
+        <button mat-menu-item routerLink="users">Grupos De Usuários</button>
+      </mat-menu>
+      <mat-menu #locais="matMenu">
+        <button mat-menu-item routerLink="locais">Cad.Locais</button>
+        <button mat-menu-item [matMenuTriggerFor]="basicos" *ngIf="getLocalId() !== 0">Dados Básicos</button>
+        <button mat-menu-item routerLink="upload-excel" *ngIf="getLocalId() !== 0">Importação</button>
+      </mat-menu>
+      <mat-menu #basicos="matMenu">
+        <button mat-menu-item routerLink="produtos">Produtos</button>
+        <button mat-menu-item routerLink="principais"> Principais</button>
+        <button mat-menu-item routerLink="imobilizados">Imobilizados</button>
+        <button mat-menu-item routerLink="nfes">NFe</button>
+        <button mat-menu-item routerLink="valores">Valores</button>
+        <button mat-menu-item routerLink="grupos">Grupos</button>
+        <button mat-menu-item routerLink="centroscustos">Centros Custos</button>
+      </mat-menu>
+      <mat-menu #inventarios="matMenu">
+        <button mat-menu-item routerLink="inventarios">Cad. Inventários</button>
+        <button mat-menu-item routerLink="ambientes">Cad. Ambientes</button>
+        <button mat-menu-item routerLink="anexar-produtos" *ngIf="getInventarioId() !== 0">Anexar Produtos</button>
+        <button mat-menu-item routerLink="imoinventarios" *ngIf="getInventarioId() !== 0">Movimento De
+          Inventário</button>
+        <button mat-menu-item routerLink="book" *ngIf="getInventarioId() !== 0">Book</button>
+        <button mat-menu-item routerLink="consulta_fotos" *ngIf="getInventarioId() !== 0">Consultar Fotos</button>
+      </mat-menu>
+      <mat-menu #gerencial="matMenu">
+        <button mat-menu-item routerLink="ativar">Ativação Inventário</button>
+        <button mat-menu-item routerLink="encerrar">Encenrrar Inventário</button>
+        <button mat-menu-item routerLink="relatorio">Relatório Fechamento</button>
+      </mat-menu>
+      <mat-menu #sobre="matMenu">
+        <button mat-menu-item routerLink="param">Parâmentos Do Sistema</button>
+        <button mat-menu-item routerLink="keys">Chaves Do Google</button>
+        <button mat-menu-item routerLink="oauth2">Google OAuth2</button>
+      </mat-menu>
+    </span>
+    <span class="example-spacer"></span>
+    <label>{{getUsuario()}}</label>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" matTooltip="LOGIN"
+      matTooltipPosition="above" (click)="onLogin()">
+      <mat-icon>person</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div class="div-spin">
+  <app-spins></app-spins>
+</div>
+<app-show-ativos></app-show-ativos>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

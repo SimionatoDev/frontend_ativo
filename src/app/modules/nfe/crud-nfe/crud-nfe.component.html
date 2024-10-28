@@ -1,0 +1,108 @@
+<!--http://jsfiddle.net/danield770/sNwrs/3158/-->
+<div class="div-barra">
+  <mat-toolbar>
+    <span class="example-spacer">NFES:</span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="getNfesContador()" matTooltip="Atualizar" matTooltipPosition="above">
+      <mat-icon>rotate_right</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+      (click)="onSaveConfig()" matTooltip="Salvar Parâmetros" matTooltipPosition="above">
+      <mat-icon>brightness_high</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+      (click)="onHome()" matTooltip="Retorno" matTooltipPosition="above">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon "
+      (click)="escolha(getAcoes()[ 'Inclusao']) " [matTooltip]="getTexto().incluir" matTooltipPosition="above">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<div>
+  <form [formGroup]="parametros" autocomplete="off" class="col-med-4">
+    <mat-form-field field appearance="outline" class="col-max">
+      <mat-label>Ordenação</mat-label>
+      <mat-select formControlName="ordenacao" (selectionChange)="onChangeParametros()">
+        <mat-option *ngFor="let op of opcoesOrdenacao" [value]="op">
+          {{op}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field field appearance="outline" class="col-max">
+      <mat-label>Pesquisar Por</mat-label>
+      <mat-select formControlName="campo" (selectionChange)="onChangeParametros()">
+        <mat-option *ngFor="let op of opcoesCampo" [value]="op">
+          {{op}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="filtro" oninput="this.value = this.value.toUpperCase()">
+    </mat-form-field>
+  </form>
+</div>
+<cdk-virtual-scroll-viewport [itemSize]="50" class="content">
+  <table class="Browse_Lanc">
+    <tr class="coluna-cabec">
+      <th>Imobilizado/Fornecedor</th>
+      <th>Nro</th>
+      <th>Série</th>
+      <th>Em./Lanç.</th>
+      <th>Qtd</th>
+      <th>P.Unit.</th>
+      <th>Total</th>
+      <th>AÇÕES</th>
+    </tr>
+    <tr *cdkVirtualFor="let nfe of nfes ">
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.id_imobilizado}}-{{nfe.imo_descricao}}</mat-label>
+        </div>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.for_razao}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.nfe}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.serie}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.dtemissao}}</mat-label>
+        </div>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.dtlancamento}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.qtd}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.punit}}</mat-label>
+        </div>
+      </td>
+      <td>
+        <div>
+          <mat-label class="Browse_Lanc_td">{{nfe.totalitem}}</mat-label>
+        </div>
+      </td>
+      <td class="acoes">
+        <barra-acoes [BARRA_VERTICAL]="true" [BARRA_ATIVIDADES]="false" [EXCLUIR]="false"
+          (changeOpcao)="escolha($event,nfe)"></barra-acoes>
+      </td>
+    </tr>
+  </table>
+</cdk-virtual-scroll-viewport>

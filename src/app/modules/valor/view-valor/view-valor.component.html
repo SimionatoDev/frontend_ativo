@@ -1,0 +1,85 @@
+<p>
+  <mat-toolbar>
+    <span class="example-spacer">
+      <mat-label>{{labelCadastro}}</mat-label>
+    </span>
+    <div class="button-container-right">
+      <button mat-raised-button color="primary" (click)="onSubmit()" *ngIf="idAcao != 3">
+        <mat-icon>check</mat-icon>
+        {{acao}}
+      </button>
+      <button mat-raised-button color="accent" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        {{getLabelCancel()}}
+      </button>
+    </div>
+  </mat-toolbar>
+</p>
+<form [formGroup]="formulario" autocomplete="off">
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-70">
+      <mat-label>Cód Imobilizado</mat-label>
+      <input matInput formControlName="id_imobilizado">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max column-span-2">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="imo_descricao" oninput="this.value = this.value.toUpperCase()" autofocus
+        [readonly]="readOnly">
+    </mat-form-field>
+  </div>
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Data Aquisição</mat-label>
+      <input matInput formControlName="dtaquisicao" mask="00/00/0000" placeholder="21/11/1987" [readonly]="readOnly">
+      <mat-error *ngIf="formulario.get('dtaquisicao')?.errors?.ValidatorDate && touchedOrDirty('dtaquisicao')">
+        {{formulario.get('dtaquisicao')?.errors?.message}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Vlr Aquisição</mat-label>
+      <input matInput formControlName="vlraquisicao" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+      <mat-error *ngIf="formulario.get('vlraquisicao')?.errors?.ValidatorStringLen && touchedOrDirty('vlraquisicao')">
+        {{formulario.get('vlraquisicao')?.errors?.message}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Total Depreciado</mat-label>
+      <input matInput formControlName="totaldepreciado" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+      <mat-error
+        *ngIf="formulario.get('totaldepreciado')?.errors?.ValidatorStringLen && touchedOrDirty('totaldepreciado')">
+        {{formulario.get('totaldepreciado')?.errors?.message}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-med-3">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Vlr Residual</mat-label>
+      <input matInput formControlName="vlrresidual" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+      <mat-error *ngIf="formulario.get('vlrresidual')?.errors?.ValidatorStringLen && touchedOrDirty('vlrresidual')">
+        {{formulario.get('vlrresidual')?.errors?.message}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Reavaliação</mat-label>
+      <input matInput formControlName="reavalicao" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+      <mat-error *ngIf="formulario.get('reavalicao')?.errors?.ValidatorStringLen && touchedOrDirty('reavalicao')">
+        {{formulario.get('reavalicao')?.errors?.message}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Vlr DEEMED</mat-label>
+      <input matInput formControlName="deemed" oninput="this.value = this.value.toUpperCase()" [readonly]="readOnly">
+      <mat-error *ngIf="formulario.get('deemed')?.errors?.ValidatorStringLen && touchedOrDirty('deemed')">
+        {{formulario.get('deemed')?.errors?.message}}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-med-1">
+    <mat-form-field appearance="outline" class="col-max">
+      <mat-label>Vlr Consolidado</mat-label>
+      <input matInput formControlName="vlrconsolidado" oninput="this.value = this.value.toUpperCase()"
+        [readonly]="readOnly">
+      <mat-error
+        *ngIf="formulario.get('vlrconsolidado')?.errors?.ValidatorStringLen && touchedOrDirty('vlrconsolidado')">
+        {{formulario.get('vlrconsolidado')?.errors?.message}}</mat-error>
+    </mat-form-field>
+  </div>
+</form>
