@@ -1,0 +1,119 @@
+<div class="padrao">
+  <div class="div-barra">
+    <mat-toolbar>
+      <span class="example-spacer">Rotina Para Transferir Lançamento e Fotos. ORIGEM->DESTINO</span>
+    </mat-toolbar>
+  </div>
+  <div mat-dialog-content class="dialog-content">
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="col-med-4">
+        <mat-form-field appearance="outline" class="col-50">
+          <mat-label>Ativo De Origem</mat-label>
+          <input matInput formControlName="de" >
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="column-span-3">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="deDescricao" readonly="true">
+        </mat-form-field>
+      </div>
+      <div class="lancamento">
+        <mat-accordion>
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                               (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Lançamento De Inventário
+              </mat-panel-title>
+              <mat-panel-description>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div  class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Código Novo:" VALUE="{{data.ativo.new_codigo | zerotospacepipe}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Origem:" VALUE="{{data.ativo.imo_origem | origem}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Situação:" VALUE="{{data.ativo.lanc_estado | situacao}}"></label>
+            </div>
+            <div  class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Grupo:" VALUE="{{data.ativo.grupo_descricao}}"></label>
+            </div>
+            <div class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="C.C. Original:" VALUE="{{data.ativo.cc_descricao}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="C.C. Novo:" VALUE="{{data.ativo.new_cc_descricao}}"></label>
+            </div>
+            <div class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Data:" VALUE="{{data.ativo.lanc_dt_lanca}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Nº Lanc.:" VALUE="{{data.ativo.id_lanca}}"></label>
+            </div>
+            <div class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Resp:" VALUE="{{data.ativo.usu_razao}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Condição:" VALUE="{{data.ativo.lanc_condicao | condicaopipe}}"></label>
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Book:" VALUE="{{data.ativo.lanc_book | simNao}}"></label>
+            </div>
+            <div class = "container">
+              <label class="Browse_Lanc_td" appLabelValue LABEL="Obs:" VALUE="{{data.ativo.lanc_obs}}"></label>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="col-med-3">
+        <mat-form-field appearance="outline" class="col-50">
+          <mat-label>Ativo Destino</mat-label>
+          <input matInput formControlName="para" >
+          <button *ngIf="hasValue('para')" matSuffix mat-icon-button aria-label="Clear" (click)="pesquisar()">
+             <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="column-span-2">
+          <mat-label>Descrição</mat-label>
+          <input matInput formControlName="paraDescricao" readonly="true">
+        </mat-form-field>
+      </div>
+      <div class="col-med-3">
+        <mat-form-field appearance="outline" class="col-max">
+          <mat-label>Origem</mat-label>
+          <input matInput formControlName="paraOrigem" readonly="true">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-max">
+          <mat-label>Condição</mat-label>
+          <input matInput formControlName="paraCondicao" readonly="true">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-max">
+          <mat-label>Book</mat-label>
+          <input matInput formControlName="paraBook" readonly="true">
+        </mat-form-field>
+      </div>
+      <div class="col-med-1">
+        <mat-form-field appearance="outline" class="column-max">
+          <mat-label>Observação</mat-label>
+          <input matInput formControlName="paraObs" >
+        </mat-form-field>
+      </div>
+      <div class="col-med-1">
+        <mat-form-field appearance="outline" class="col-max">
+          <mat-label>Grupo</mat-label>
+          <input matInput formControlName="paraGrupo" readonly="true">
+        </mat-form-field>
+      </div>
+      <div class="col-med-1">
+        <mat-form-field appearance="outline" class="col-max">
+          <mat-label>C.Custo</mat-label>
+          <input matInput formControlName="paraCC" readonly="true">
+        </mat-form-field>
+      </div>
+      <div class="col-med-1">
+          <p appLabelVerdeVermelho [ITSOK]="itsOK">{{mensagem}}</p>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <div class="button-container-right">
+      <button mat-raised-button color="accent" (click)="closeModal()">
+        <mat-icon>cancel</mat-icon>
+        <span>{{getLabelCancel()}}</span>
+      </button>
+      <button mat-raised-button color="primary" (click)="actionFunction()" [disabled]="!itsOK" >
+        <mat-icon>check</mat-icon>
+        <span>SUBSTITUIR</span>
+      </button>
+    </div>
+  </div>
+</div>

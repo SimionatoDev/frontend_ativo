@@ -264,6 +264,11 @@ body {
     color: #0000cc;
 }
 
+.Browse_Lanc_td_red {
+  font-size: small;
+  color: red;
+}
+
 .Browse_Lanc_td_large {
     font-size: large;
     color: #0000cc;

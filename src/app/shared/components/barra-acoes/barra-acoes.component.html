@@ -62,10 +62,14 @@
         <mat-icon>person</mat-icon>
         <span>NFE</span>
       </button>
-            <button mat-menu-item (click)="onChangeOpcao(94)" *ngIf="barra_valores">
+      <button mat-menu-item (click)="onChangeOpcao(94)" *ngIf="barra_valores">
         <mat-icon>person</mat-icon>
         <span>Valores</span>
-      </button>
+    </button>
+    <button mat-menu-item (click)="onChangeOpcao(getAcoes().Substituir)" *ngIf="barra_substituir">
+      <mat-icon>person</mat-icon>
+      <span>Substituir Ativo</span>
+    </button>
         </ng-template>
     </mat-menu>
 </div>

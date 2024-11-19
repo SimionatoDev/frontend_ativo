@@ -201,6 +201,7 @@ export class AnexarProdutosComponent implements OnInit {
     par.id_filial = this.local.id;
 
     par.contador = 'S';
+alert
 
     this.globalService.setSpin(true);
     this.inscricaoTotalImobilizados = this.imobilizadoService

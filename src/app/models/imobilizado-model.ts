@@ -11,9 +11,11 @@ export class ImobilizadoModel {
   public origem: string = '';
   public condicao: number = 9;
   public apelido: string = '';
+  public principal: number = 0;
   public user_insert: number = 0;
   public user_update: number = 0;
   public grupo_descricao: string = '';
   public cc_descricao: string = '';
   public forne_razao: string = '';
+  public princ_descricao:string = '';
 }

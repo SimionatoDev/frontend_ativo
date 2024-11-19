@@ -77,6 +77,7 @@ export class ImobilizadoinventarioService {
   }
 
   getExcelv2(params: ParametroImobilizadoinventario01): Observable<any> {
+    console.log(params);
     return this.http.post<any>(`${this.apiURL}imobilizadosinventariosexcelv2`, params);
   }
 }

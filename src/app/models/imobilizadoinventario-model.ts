@@ -18,6 +18,7 @@ export class ImobilizadoinventarioModel {
   public imo_serie: string = '';
   public imo_item: number = 0;
   public imo_origem: string = "";
+  public imo_principal:number = 0;;
   public cc_descricao: string = '';
   public grupo_descricao: string = '';
   public lanc_id_usuario: number = 0;
@@ -28,4 +29,5 @@ export class ImobilizadoinventarioModel {
   public lanc_book: string = 'N';
   public usu_razao: string = '';
   public new_cc_descricao: string = '';
+  public princ_descricao:string = '';
 }

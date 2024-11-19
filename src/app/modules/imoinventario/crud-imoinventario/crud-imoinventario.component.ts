@@ -1,3 +1,5 @@
+import { ChangeMod01DialogComponent } from './../../../shared/components/change-mod01-dialog/change-mod01-dialog.component';
+import { ChangeMod01Data } from './../../../shared/components/change-mod01-dialog/change-mod01-data';
 import { LocalStorageService } from './../../../services/localStorage.service';
 import { RetornoLancamento } from 'src/app/shared/classes/retorno-lancamento';
 import { InventarioModel } from './../../../models/inventario-model';
@@ -135,7 +137,8 @@ export class CrudImoinventarioComponent implements OnInit {
     private ngZone: NgZone,
     private LancaDialog: MatDialog,
     private NfeDialog: MatDialog,
-    private valorDialog: MatDialog
+    private valorDialog: MatDialog,
+    private changeDialog:MatDialog
   ) {
     this.localStorageService.clear();
     this.getCentroCustos();
@@ -468,6 +471,11 @@ export class CrudImoinventarioComponent implements OnInit {
       return;
     }
 
+    if (op == CadastroAcoes.Substituir){
+      this.openSubstituirDialog(imobilizado);
+      return;
+    }
+
     this.atual = imobilizado;
 
     if (imobilizado.id_lanca == 0) {
@@ -517,6 +525,24 @@ export class CrudImoinventarioComponent implements OnInit {
         //faço nada
       });
   }
+
+
+  openSubstituirDialog(imobilizado: ImobilizadoinventarioModel): void {
+    const data: ChangeMod01Data = new ChangeMod01Data();
+    data.ativo = imobilizado;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'substituir';
+    dialogConfig.width = '1200px';
+    dialogConfig.data = data;
+    const modalDialog = this.NfeDialog.open(ChangeMod01DialogComponent, dialogConfig)
+      .beforeClosed()
+      .subscribe((data: ChangeMod01Data) => {
+        this.getImoIven();
+      });
+  }
+
+
 
   openValoresDialog(): void {
     const data: ValorData = new ValorData();

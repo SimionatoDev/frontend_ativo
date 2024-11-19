@@ -35,6 +35,10 @@ import { DownloadDialogComponent } from './components/download-dialog/download-d
 import { NgxMaskModule } from 'ngx-mask';
 import { CcPipePipe } from './pipes/cc-pipe.pipe';
 import { CondicaoPipePipe } from './pipes/condicao-pipe.pipe';
+import { FiltroCadastroPadraoComponent } from './components/filtro-cadastro-padrao/filtro-cadastro-padrao.component';
+import { ChangeMod01DialogComponent } from './components/change-mod01-dialog/change-mod01-dialog.component';
+import { LabelValueDirective } from './diretivas/label-value.directive';
+import { LabelVerdeVermelhoDirective } from './diretivas/label-verde-vermelho.directive';
 @NgModule({
   declarations: [
     SimNaoPipe,
@@ -59,6 +63,7 @@ import { CondicaoPipePipe } from './pipes/condicao-pipe.pipe';
     OrigemPipe,
     LancaDialogComponent,
     SetfocusDirective,
+    LabelVerdeVermelhoDirective,
     ImobilizadoDialogComponent,
     NfeDialogComponent,
     ValoresDialogComponent,
@@ -70,6 +75,9 @@ import { CondicaoPipePipe } from './pipes/condicao-pipe.pipe';
     DownloadDialogComponent,
     CcPipePipe,
     CondicaoPipePipe,
+    FiltroCadastroPadraoComponent,
+    ChangeMod01DialogComponent,
+    LabelValueDirective
   ],
   imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule,
     NgxMaskModule.forChild(),],
@@ -90,11 +98,14 @@ import { CondicaoPipePipe } from './pipes/condicao-pipe.pipe';
     FirstNamePipe,
     OrigemPipe,
     SetfocusDirective,
+    LabelVerdeVermelhoDirective,
     DashboardComponent,
     FiltroImoinventarioComponent,
     BrowserFotoComponent,
     CcPipePipe,
-    CondicaoPipePipe
+    CondicaoPipePipe,
+    FiltroCadastroPadraoComponent,
+    LabelValueDirective,
   ],
 })
 export class SharedModule {}

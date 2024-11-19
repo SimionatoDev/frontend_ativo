@@ -24,6 +24,12 @@ const routes: Routes = [
     canActivate: [DiganaoGuard],
   },
   {
+    path: 'cadastro_padrao',
+    loadChildren: () =>
+      import('./modules/padrao-cadastro/padrao-cadastro.module').then((m) => m.PadraoCadastroModule),
+    canActivate: [DiganaoGuard],
+  },
+  {
     path: 'usuarios',
     loadChildren: () =>
       import('./modules/usuario/usuario.module').then((m) => m.UsuarioModule),

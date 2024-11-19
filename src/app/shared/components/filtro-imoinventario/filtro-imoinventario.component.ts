@@ -35,6 +35,9 @@ import { DownloadDialogData } from '../download-dialog/download-dialog-data';
 import { DownloadDialogComponent } from '../download-dialog/download-dialog.component';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ParametroModel } from 'src/app/models/parametro-model';
+import { ParametroPrincipal01 } from 'src/app/parametros/parametro-principal01';
+import { PrincipalService } from 'src/app/services/principal.service';
+import { PrincipalModel } from 'src/app/models/principal-model';
 
 @Component({
   selector: 'app-filtro-imoinventario',
@@ -57,7 +60,7 @@ export class FiltroImoinventarioComponent implements OnInit {
   inscricaoExecutores!: Subscription;
   inscricaoExcel!: Subscription;
   inscricaoEmail!: Subscription;
-
+  inscricaoPrincipais!: Subscription;
   parametros: FormGroup;
 
   grupos: GrupoModel[] = [];
@@ -79,6 +82,8 @@ export class FiltroImoinventarioComponent implements OnInit {
   usuarios: UsuarioModel[] = [];
 
   lancamento: LancamentoModel = new LancamentoModel();
+
+  principais:PrincipalModel[] = [];
 
   showFiltro: boolean = true;
 
@@ -112,6 +117,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     private parametrosService:ParametrosService,
     private centrocustoService: CentrocustoService,
     private lancamentoService:LancamentoService,
+    private principalService:PrincipalService,
     private emailService:EmailService,
     private appSnackBar: AppSnackbar,
     private EmailDialog: MatDialog,
@@ -131,6 +137,7 @@ export class FiltroImoinventarioComponent implements OnInit {
         executor: [{ value: '' }],
         codigo: [{ value: '' }],
         novo: [{ value: '' }],
+        id_principal: [{ value: '' }],
         condicao: [{ value: '' }],
         book: [{ value: '' }],
         descricao: [{ value: '' }],
@@ -218,6 +225,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     this.inscricaoExecutores?.unsubscribe();
     this.inscricaoExcel?.unsubscribe();
     this.inscricaoEmail?.unsubscribe();
+    this.inscricaoPrincipais?.unsubscribe();
   }
 
 
@@ -330,7 +338,7 @@ export class FiltroImoinventarioComponent implements OnInit {
           this.grupos = [];
           this.grupos.push(semFiltro);
           this.grupos = [...this.grupos, ...data];
-          this.loadParametros();
+          this.getPrincipais();
         },
         (error: any) => {
           this.globalService.setSpin(false);
@@ -343,6 +351,43 @@ export class FiltroImoinventarioComponent implements OnInit {
         }
       );
   }
+
+  getPrincipais(){
+
+    let par = new ParametroPrincipal01()
+
+    par.id_empresa = this.globalService.getIdEmpresa();
+
+    par.id_filial = this.globalService.getLocal().id;
+
+    par.orderby = 'Descrição';
+
+    this.globalService.setSpin(true);
+    this.inscricaoPrincipais = this.principalService
+      .getPrincipaisParametro_01(par)
+      .subscribe(
+        (data: PrincipalModel[]) => {
+          this.globalService.setSpin(false);
+          const semFiltro: PrincipalModel = new PrincipalModel();
+          semFiltro.codigo = 0;
+          semFiltro.descricao = 'Todos';
+          this.principais = [];
+          this.principais.push(semFiltro);
+          this.principais = [...this.principais, ...data];
+          this.loadParametros();
+        },
+        (error: any) => {
+          this.globalService.setSpin(false);
+          const semFiltro: PrincipalModel = new PrincipalModel();
+          semFiltro.codigo = 0;
+          semFiltro.descricao = 'Todos';
+          this.principais = [];
+          this.principais.push(semFiltro);
+          this.loadParametros();
+        }
+      );
+  }
+
 
   onGetExcelToEmailOrDownLoad(destino:string) {
 
@@ -406,6 +451,7 @@ export class FiltroImoinventarioComponent implements OnInit {
       grupos: GetValueJsonNumber(this.parametro.getParametro(), 'grupo'),
       situacoes: GetValueJsonString(this.parametro.getParametro(), 'situacao'),
       codigo: GetValueJsonNumber(this.parametro.getParametro(), 'codigo')?.toString(),
+      id_principal: GetValueJsonNumber(this.parametro.getParametro(), 'id_principal')?.toString(),
       novo: GetValueJsonNumber(this.parametro.getParametro(), 'novo')?.toString(),
       origem: GetValueJsonString(this.parametro.getParametro(), 'origem'),
       executor: GetValueJsonNumber(this.parametro.getParametro(), 'executor'),
@@ -434,6 +480,7 @@ export class FiltroImoinventarioComponent implements OnInit {
       situacoes: -1,
       codigo: '',
       novo: '',
+      id_principal: 0,
       origem: '',
       executor: 0,
       condicao: '0',
@@ -453,7 +500,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     this.parametro = new ParametroModel();
     this.parametro.id_empresa = this.globalService.getIdEmpresa();
     this.parametro.modulo = this.paramName;
-    this.parametro.assinatura = 'V1.00 19/09/2024';
+    this.parametro.assinatura = 'V1.00 18/11/2024';
     this.parametro.id_usuario = this.globalService.usuario.id;
     this.parametro.parametro = `
        {
@@ -473,6 +520,7 @@ export class FiltroImoinventarioComponent implements OnInit {
          "observacao": "",
          "dtinicial":"",
          "dtfinal":"",
+         "id_principal":0,
          "orderby":"001",
          "page": 1,
          "new": false,
@@ -483,7 +531,6 @@ export class FiltroImoinventarioComponent implements OnInit {
        if (param !== null){
            this.parametro.load(param);
            this.setValues();
-           //this.onChangeParametros();
        } else {
           this.getParametro();
       }
@@ -560,7 +607,8 @@ export class FiltroImoinventarioComponent implements OnInit {
     Object(config).observacao = this.parametros.value.observacao.toUpperCase();
     Object(config).dtinicial  = this.parametros.value.dtinicial;
     Object(config).dtfinal    = this.parametros.value.dtfinal;
-    Object(config).orderby    = this.parametros.value.orderby;
+    Object(config).id_principal  = this.parametros.value.id_principal;
+    Object(config).orderby       = this.parametros.value.orderby;
 
     this.parametro.parametro  = JSON.stringify(config);
   }
@@ -605,6 +653,11 @@ export class FiltroImoinventarioComponent implements OnInit {
     if (campo == 'novo')
       this.parametros.patchValue({
         novo: ''
+    })
+
+    if (campo == 'id_principal')
+      this.parametros.patchValue({
+        id_principal: ''
     })
     this.onChangeParametros();
 }

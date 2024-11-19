@@ -41,16 +41,19 @@
     </td>
     <td [class.highlight]="imo.id_imobilizado == targetRowId">
       <div>
-        <mat-label class="Browse_Lanc_td">{{imo.imo_descricao}}</mat-label>
+        <mat-label class="Browse_Lanc_td">Desc.: {{imo.imo_descricao}}</mat-label>
       </div>
       <div>
-        <mat-label class="Browse_Lanc_td">{{imo.imo_cod_cc | ccpipe}}-{{imo.cc_descricao | embrancopipe}}</mat-label>
+        <mat-label class="Browse_Lanc_td">C.C.: {{imo.imo_cod_cc | ccpipe}}-{{imo.cc_descricao | embrancopipe}}</mat-label>
       </div>
       <div>
-        <mat-label class="Browse_Lanc_td">{{imo.grupo_descricao}}</mat-label>
+        <mat-label class="Browse_Lanc_td">Grupo: {{imo.grupo_descricao}}</mat-label>
       </div>
       <div *ngIf="imo.lanc_obs.trim().length > 0">
         <mat-label class="Browse_Lanc_td">OBS:{{imo.lanc_obs}}</mat-label>
+      </div>
+      <div *ngIf="imo.imo_principal > 0">
+        <mat-label class="Browse_Lanc_td_red">Princ.: {{imo.imo_principal}}-{{imo.princ_descricao}}</mat-label>
       </div>
     </td>
     <td [class.highlight]="imo.id_imobilizado == targetRowId">
@@ -87,7 +90,7 @@
     </td>
     <td class="acoes" [class.highlight]="imo.id_imobilizado == targetRowId">
       <barra-acoes [EXCLUIR]="imo.id_lanca > 0" [CONSULTAR]="imo.id_lanca > 0" [FOTOS]="false" [BARRA_VERTICAL]="true"
-        [BARRA_NFE]="imo.imo_nfe !== ''" [BARRA_VALORES]="true" [BARRA_EXCLUIR]="false" [BARRA_ATIVIDADES]="false"
+        [BARRA_NFE]="imo.imo_nfe !== ''" [BARRA_VALORES]="true" [BARRA_EXCLUIR]="false" [BARRA_ATIVIDADES]="false" [BARRA_SUBSTITUIR]="(imo.imo_origem == 'M' && imo.id_lanca > 0)"
         (changeOpcao)="escolha($event,imo)">
       </barra-acoes>
     </td>

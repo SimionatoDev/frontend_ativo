@@ -1,0 +1,59 @@
+
+<div class="div-barra" *ngIf="browse">
+  <mat-toolbar>
+    <span class="example-spacer">Descrição Padrão</span>
+    <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+      (click)="novaConsulta()" matTooltip="Atualizar" matTooltipPosition="above">
+      <mat-icon>rotate_right</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+      (click)="onHome()" matTooltip="Retorno" matTooltipPosition="above">
+      <mat-icon>home</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<app-filtro-cadastro-padrao PARAMNAME = "paramapelido" [HIDE]="hide" [EMAIL]="true" [DOWNLOAD]="true" [CONTROLE_PAGINAS]="controlePaginas" (changeParametro)="onChangeParametros($event)" (changeHide)="onChangeHide($event)" ></app-filtro-cadastro-padrao>
+<div>
+  <h2>Nunhuma Informação Para A Consulta</h2>
+</div>
+<table class="Browse_Lanc" *ngIf="apelidos.length > 0">
+  <tr class="coluna-cabec">
+    <th>Código</th>
+    <th>Apelido</th>
+    <th>Descrição</th>
+    <th>AÇÕES</th>
+  </tr>
+  <tr *ngFor="let apelido of apelidos">
+    <td >
+      <div>
+        <mat-label class="Browse_Lanc_td">{{apelido.id}}</mat-label>
+      </div>
+    </td>
+    <td>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{apelido.apelido}}</mat-label>
+      </div>
+    </td>
+    <td>
+      <div>
+        <mat-label class="Browse_Lanc_td">{{apelido.descricao}}</mat-label>
+      </div>
+    </td>
+    <td class="acoes">
+      <barra-acoes></barra-acoes>
+    </td>
+  </tr>
+</table>
+<mat-toolbar *ngIf="apelidos.length > 0">
+  <span class="example-spacer">Descrição Padrão</span>
+  <app-navegator [controle]="controlePaginas" (changePage)="onChangePage()"></app-navegator>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+    (click)="novaConsulta()" matTooltip="Atualizar" matTooltipPosition="above">
+    <mat-icon>rotate_right</mat-icon>
+  </button>
+  <button mat-icon-button aria-label="Example icon-button with share icon " matTooltipPosition="above"
+    (click)="onHome()" matTooltip="Retorno" matTooltipPosition="above">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>

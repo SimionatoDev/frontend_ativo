@@ -22,6 +22,7 @@ import { OrigemPipe } from './shared/pipes/origem.pipe';
 import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { LocalStorageService } from './services/localStorage.service';
+import { CondicaoPipePipe } from './shared/pipes/condicao-pipe.pipe';
 
 registerLocaleData(localePt);
 
@@ -46,6 +47,7 @@ registerLocaleData(localePt);
     FirstNamePipe,
     SituacaoPipe,
     OrigemPipe,
+    CondicaoPipePipe,
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: LOCALE_ID, useValue: 'pt' },
     DiganaoGuard,

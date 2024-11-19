@@ -60,7 +60,7 @@ export class CentrocustoViewComponent implements OnInit {
     if (this.idAcao == CadastroAcoes.Inclusao) {
       this.cc = new CentrocustoModel();
       this.cc.id_empresa = this.globalService.getIdEmpresa();
-      this.cc.id_filial = this.globalService.getLocal().id;
+      this.cc.id_filial  = this.globalService.getLocal().id;
     } else {
       this.getGrupo();
     }

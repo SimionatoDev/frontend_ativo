@@ -131,6 +131,16 @@
     </mat-form-field>
   </div>
   <div class="col-med-1">
+    <mat-form-field field appearance="outline" class="col-max">
+      <mat-label>Principal</mat-label>
+      <mat-select formControlName="id_principal" (selectionChange)="onChangeParametros()">
+        <mat-option *ngFor="let principal of principais" [value]="principal.codigo">
+          {{principal.descricao}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-med-1">
     <mat-form-field appearance="outline" class="col-max">
       <mat-label>Descrição</mat-label>
       <input class="uppercase" matInput  formControlName="descricao">

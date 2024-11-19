@@ -12,5 +12,6 @@ export enum CadastroAcoes {
   Inclusao_Ambiente = 20,
   Exclusao_Ambiente = 21,
   Fotos = 22,
+  Substituir = 23,
   None = 99,
 }
