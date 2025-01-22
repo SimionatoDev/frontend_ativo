@@ -39,6 +39,8 @@ import { FiltroCadastroPadraoComponent } from './components/filtro-cadastro-padr
 import { ChangeMod01DialogComponent } from './components/change-mod01-dialog/change-mod01-dialog.component';
 import { LabelValueDirective } from './diretivas/label-value.directive';
 import { LabelVerdeVermelhoDirective } from './diretivas/label-verde-vermelho.directive';
+import { SeachDialogComponent } from './components/seach-dialog/seach-dialog.component';
+import { ChangeMod02DialogComponent } from './components/change-mod02-dialog/change-mod02-dialog.component';
 @NgModule({
   declarations: [
     SimNaoPipe,
@@ -77,7 +79,9 @@ import { LabelVerdeVermelhoDirective } from './diretivas/label-verde-vermelho.di
     CondicaoPipePipe,
     FiltroCadastroPadraoComponent,
     ChangeMod01DialogComponent,
-    LabelValueDirective
+    LabelValueDirective,
+    SeachDialogComponent,
+    ChangeMod02DialogComponent
   ],
   imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule,
     NgxMaskModule.forChild(),],
@@ -106,6 +110,7 @@ import { LabelVerdeVermelhoDirective } from './diretivas/label-verde-vermelho.di
     CondicaoPipePipe,
     FiltroCadastroPadraoComponent,
     LabelValueDirective,
+    ChangeMod02DialogComponent
   ],
 })
 export class SharedModule {}

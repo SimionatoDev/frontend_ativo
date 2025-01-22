@@ -23,6 +23,8 @@ import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { LocalStorageService } from './services/localStorage.service';
 import { CondicaoPipePipe } from './shared/pipes/condicao-pipe.pipe';
+import { SeachDialogService } from './services/seach-dialog.service';
+import { SeachDialogComponent } from './shared/components/seach-dialog/seach-dialog.component';
 
 registerLocaleData(localePt);
 
@@ -54,7 +56,9 @@ registerLocaleData(localePt);
     GlobalService,
     LocalStorageService,
     { provide: MatPaginatorIntl, useClass: BrPaginatorIntl },
+    SeachDialogService
   ],
+  entryComponents:[SeachDialogComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

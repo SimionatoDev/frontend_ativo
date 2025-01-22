@@ -49,6 +49,8 @@ import { UsuarioModel } from 'src/app/models/usuario-model';
 import { ResumoLancamentosUsuariosModel } from 'src/app/models/resumo-lancamentos-usuario-model';
 import { AtualizaParametroImobilizadoInventario01 } from 'src/app/shared/classes/atualiza-parametro-imobilizado-inventario01';
 import { RetornoOpcao } from 'src/app/shared/classes/retorno-opcao';
+import { ChangeMod02DialogComponent } from 'src/app/shared/components/change-mod02-dialog/change-mod02-dialog.component';
+import { ChangeMod02Data } from 'src/app/shared/components/change-mod02-dialog/change-mod02-data';
 
 @Component({
   selector: 'app-crud-imoinventario',
@@ -138,7 +140,8 @@ export class CrudImoinventarioComponent implements OnInit {
     private LancaDialog: MatDialog,
     private NfeDialog: MatDialog,
     private valorDialog: MatDialog,
-    private changeDialog:MatDialog
+    private substrituirDialog:MatDialog,
+    private trocarDialog:MatDialog,
   ) {
     this.localStorageService.clear();
     this.getCentroCustos();
@@ -476,6 +479,11 @@ export class CrudImoinventarioComponent implements OnInit {
       return;
     }
 
+    if (op == CadastroAcoes.Trocar){
+      this.openTrocarDialog(imobilizado);
+      return;
+    }
+
     this.atual = imobilizado;
 
     if (imobilizado.id_lanca == 0) {
@@ -535,9 +543,24 @@ export class CrudImoinventarioComponent implements OnInit {
     dialogConfig.id = 'substituir';
     dialogConfig.width = '1200px';
     dialogConfig.data = data;
-    const modalDialog = this.NfeDialog.open(ChangeMod01DialogComponent, dialogConfig)
+    const modalDialog = this.substrituirDialog.open(ChangeMod01DialogComponent, dialogConfig)
       .beforeClosed()
       .subscribe((data: ChangeMod01Data) => {
+        this.getImoIven();
+      });
+  }
+
+  openTrocarDialog(imobilizado: ImobilizadoinventarioModel): void {
+    const data: ChangeMod02Data = new ChangeMod02Data();
+    data.ativo = imobilizado;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'trocar';
+    dialogConfig.width = '1200px';
+    dialogConfig.data = data;
+    const modalDialog = this.trocarDialog.open(ChangeMod02DialogComponent, dialogConfig)
+      .beforeClosed()
+      .subscribe((data: ChangeMod02Data) => {
         this.getImoIven();
       });
   }

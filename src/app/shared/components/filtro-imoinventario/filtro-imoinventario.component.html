@@ -47,19 +47,23 @@
   <div class="col-med-2">
     <mat-form-field field appearance="outline" class="col-max">
       <mat-label>Centro Custo</mat-label>
-      <mat-select formControlName="ccs" (selectionChange)="onChangeParametros()">
-        <mat-option *ngFor="let cc of ccs" [value]="cc.codigo">
-          {{cc.descricao}}
-        </mat-option>
-      </mat-select>
+      <input class="uppercase" matInput  formControlName="cc_descricao" [readonly]="true">
+      <button *ngIf="hasValue('cc_descricao')" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue('cc_descricao')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="onPesquisaCC()">
+        <mat-icon>search</mat-icon>
+      </button>
     </mat-form-field>
     <mat-form-field field appearance="outline" class="col-max">
       <mat-label>Novo Centro Custo</mat-label>
-      <mat-select formControlName="cc_novo" (selectionChange)="onChangeParametros()">
-        <mat-option *ngFor="let cc of ccs_alterados" [value]="cc.codigo">
-          {{cc.descricao}}
-        </mat-option>
-      </mat-select>
+      <input class="uppercase" matInput  formControlName="ccnovo_descricao" [readonly]="true">
+      <button *ngIf="hasValue('ccnovo_descricao')" matSuffix mat-icon-button aria-label="Clear" (click)="clearValue('ccnovo_descricao')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button aria-label="Clear" (click)="onPesquisaCCNovo()">
+        <mat-icon>search</mat-icon>
+      </button>
     </mat-form-field>
   </div>
   <div class="col-med-2">

@@ -3,8 +3,8 @@
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build --base-href https://simionatodev.github.io/frontend_ativo/ && copy docs\\index.html docs\\404.html",
+        "start": "npx -p @angular/cli@12 ng serve",
+        "build": "npx -p @angular/cli@12 ng build --base-href https://simionatodev.github.io/frontend_ativo && copy docs\\index.html docs\\404.html ",
         "watch": "ng build --watch --configuration development",
         "test": "ng test"
     },
@@ -15,6 +15,7 @@
         "@angular/common": "~12.2.0",
         "@angular/compiler": "~12.2.0",
         "@angular/core": "~12.2.0",
+        "@angular/flex-layout": "^15.0.0-beta.42",
         "@angular/forms": "~12.2.0",
         "@angular/material": "^12.2.13",
         "@angular/platform-browser": "~12.2.0",

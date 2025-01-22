@@ -38,6 +38,9 @@ import { ParametroModel } from 'src/app/models/parametro-model';
 import { ParametroPrincipal01 } from 'src/app/parametros/parametro-principal01';
 import { PrincipalService } from 'src/app/services/principal.service';
 import { PrincipalModel } from 'src/app/models/principal-model';
+import { SeachDialogService } from 'src/app/services/seach-dialog.service';
+import { SeachDialogData } from '../seach-dialog/seach-dialog-data';
+import { CadastroEnum } from '../../enum/cadastro-enum.enum';
 
 @Component({
   selector: 'app-filtro-imoinventario',
@@ -55,7 +58,6 @@ export class FiltroImoinventarioComponent implements OnInit {
   @Output('changeHide') changeHide = new EventEmitter<boolean>();
 
   inscricaoGetGrupo!: Subscription;
-  inscricaoGetCc!: Subscription;
   inscricaoParametro!: Subscription;
   inscricaoExecutores!: Subscription;
   inscricaoExcel!: Subscription;
@@ -91,7 +93,7 @@ export class FiltroImoinventarioComponent implements OnInit {
 
   hideAcao:string = "Ocultar";
 
-  codigo$!:Observable<any>;
+
 
   orderby:Orderby[] =  [
     {sigla:"001" , descricao:"Ativo-Antigo"},
@@ -122,6 +124,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     private appSnackBar: AppSnackbar,
     private EmailDialog: MatDialog,
     private DownLoadDialog: MatDialog,
+    private searchDialogService:SeachDialogService
     ) {
       this.parametros = formBuilder.group({
         hoje:[{ value: '' }],
@@ -129,8 +132,8 @@ export class FiltroImoinventarioComponent implements OnInit {
         dtinicial: [{ value: '' }],
         dtfinal: [{ value: '' }],
         orderby: [{ value: '' }],
-        ccs: [{ value: '' }],
-        cc_novo: [{ value: '' }],
+        cc_descricao: [{ value: '' }],
+        ccnovo_descricao: [{ value: '' }],
         grupos: [{ value: '' }],
         situacoes: [{ value: '' }],
         origem: [{ value: '' }],
@@ -142,6 +145,11 @@ export class FiltroImoinventarioComponent implements OnInit {
         book: [{ value: '' }],
         descricao: [{ value: '' }],
         observacao: [{ value: '' }],
+        chaves: formBuilder.group({
+          cc:[{ value: '' }],
+          cc_novo: [{ value: '' }],
+        })
+
       });
     this.situacoesInventario = this.globalService.getSituacoesInventario();
     this.situacoesInventarioPar =
@@ -164,7 +172,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     this.setHide();
     this.setValuesNoParam();
     this.getExecutores();
-    this.getCentroCustos();
+    this.getGrupos();
     }
 
   ngOnInit(): void {
@@ -185,6 +193,20 @@ export class FiltroImoinventarioComponent implements OnInit {
      ).subscribe((_) => this.onChangeParametros());
 
      this.parametros.get("codigo")?.valueChanges.pipe(
+      map(value => value.trim()),
+      filter(value => value.length > 0),
+      debounceTime(350),
+      distinctUntilChanged(),
+     ).subscribe((_) => this.onChangeParametros());
+
+     this.parametros.get("cc_descricao")?.valueChanges.pipe(
+      map(value => value.trim()),
+      filter(value => value.length > 0),
+      debounceTime(350),
+      distinctUntilChanged(),
+     ).subscribe((_) => this.onChangeParametros());
+
+     this.parametros.get("ccnovo_descricao")?.valueChanges.pipe(
       map(value => value.trim()),
       filter(value => value.length > 0),
       debounceTime(350),
@@ -220,7 +242,6 @@ export class FiltroImoinventarioComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.inscricaoGetGrupo?.unsubscribe();
-    this.inscricaoGetCc?.unsubscribe();
     this.inscricaoParametro?.unsubscribe();
     this.inscricaoExecutores?.unsubscribe();
     this.inscricaoExcel?.unsubscribe();
@@ -258,64 +279,6 @@ export class FiltroImoinventarioComponent implements OnInit {
       );
   }
 
-  getCentroCustos() {
-    let par = new ParametroCentrocusto01();
-
-    par.id_empresa = this.globalService.getIdEmpresa();
-
-    par.id_filial = this.globalService.getLocal().id;
-
-    par.orderby = 'Descrição';
-
-    this.globalService.setSpin(true);
-    this.inscricaoGetCc = this.centrocustoService
-      .getCentroscustosParametro_01(par)
-      .subscribe(
-        (data: CentrocustoModel[]) => {
-          this.globalService.setSpin(false);
-          const semFiltro: CentrocustoModel = new CentrocustoModel();
-          semFiltro.codigo = '';
-          semFiltro.descricao = 'Todos';
-          this.ccs = [];
-          this.ccs_alterados = [];
-          this.ccs.push(semFiltro);
-          const semAlter: CentrocustoModel = new CentrocustoModel();
-          semAlter.codigo = '';
-          semAlter.descricao = 'Todos Não Alterados';
-          this.ccs_alterados.push(semAlter);
-          data.forEach((obj) => {
-            var idx = obj.descricao.indexOf('-');
-            if (idx >= 0) {
-              obj.descricao =
-                obj.descricao.trim().substring(idx + 1) +
-                ' -> ' +
-                obj.descricao.trim();
-            }
-          });
-          data.sort((a, b) => {
-            if (a.descricao < b.descricao) {
-              return -1;
-            }
-            if (a.descricao > b.descricao) {
-              return 1;
-            }
-            return 0;
-          });
-          this.ccs = [...this.ccs, ...data];
-          this.ccs_alterados = [...this.ccs_alterados, ...data];
-          this.getGrupos();
-        },
-        (error: any) => {
-          this.globalService.setSpin(false);
-          this.ccs = [];
-          this.ccs_alterados = [];
-          this.appSnackBar.openFailureSnackBar(
-            `Pesquisa Nos Grupos ${messageError(error)}`,
-            'OK'
-          );
-        }
-      );
-  }
 
   getGrupos() {
     let par = new ParametroGrupo01();
@@ -446,8 +409,8 @@ export class FiltroImoinventarioComponent implements OnInit {
       dtinicial:GetValueJsonString(this.parametro.getParametro(), 'dtinicial'),
       dtfinal:GetValueJsonString(this.parametro.getParametro(), 'dtfinal'),
       orderby:GetValueJsonString(this.parametro.getParametro(), 'orderby'),
-      ccs: GetValueJsonString(this.parametro.getParametro(), 'cc'),
-      cc_novo: GetValueJsonString(this.parametro.getParametro(), 'cc_novo'),
+      cc_descricao: GetValueJsonString(this.parametro.getParametro(), 'cc_descricao'),
+      ccnovo_descricao: GetValueJsonString(this.parametro.getParametro(), 'ccnovo_descricao'),
       grupos: GetValueJsonNumber(this.parametro.getParametro(), 'grupo'),
       situacoes: GetValueJsonString(this.parametro.getParametro(), 'situacao'),
       codigo: GetValueJsonNumber(this.parametro.getParametro(), 'codigo')?.toString(),
@@ -462,6 +425,10 @@ export class FiltroImoinventarioComponent implements OnInit {
         this.parametro.getParametro(),
         'observacao'
       ),
+      chaves:{
+        "cc": GetValueJsonString(this.parametro.getParametro(), 'cc'),
+        "cc_novo": GetValueJsonString(this.parametro.getParametro(), 'cc_novo'),
+      }
     });
     this.enable_filter = true;
   }
@@ -474,8 +441,6 @@ export class FiltroImoinventarioComponent implements OnInit {
       dtinicial:'',
       dtfinal:'',
       orderby:'001',
-      ccs: '',
-      cc_novo: '',
       grupos: 0,
       situacoes: -1,
       codigo: '',
@@ -487,6 +452,12 @@ export class FiltroImoinventarioComponent implements OnInit {
       book: '',
       descricao: '',
       observacao: '',
+      cc_descricao: 'Todos',
+      ccnovo_descricao: 'Todos Não Alterados',
+      chaves:{
+        "cc": "" ,
+        "cc_novo": ""
+      }
     });
     this.enable_filter = true;
   }
@@ -500,7 +471,7 @@ export class FiltroImoinventarioComponent implements OnInit {
     this.parametro = new ParametroModel();
     this.parametro.id_empresa = this.globalService.getIdEmpresa();
     this.parametro.modulo = this.paramName;
-    this.parametro.assinatura = 'V1.00 18/11/2024';
+    this.parametro.assinatura = 'V1.00 22/11/2024';
     this.parametro.id_usuario = this.globalService.usuario.id;
     this.parametro.parametro = `
        {
@@ -521,6 +492,8 @@ export class FiltroImoinventarioComponent implements OnInit {
          "dtinicial":"",
          "dtfinal":"",
          "id_principal":0,
+         "cc_descricao":"Todos",
+         "ccnovo_descricao":"Todos Não Alterados",
          "orderby":"001",
          "page": 1,
          "new": false,
@@ -544,7 +517,6 @@ export class FiltroImoinventarioComponent implements OnInit {
     par.assinatura = this.parametro.assinatura;
     par.id_usuario = this.parametro.id_usuario;
     par.orderby = 'Usuário';
-    console.log("pesquisa",par);
     this.inscricaoParametro = this.parametrosService
       .getParametrosParametro01(par)
       .subscribe(
@@ -592,9 +564,11 @@ export class FiltroImoinventarioComponent implements OnInit {
   }
 
   refreshParametro(start: boolean = true){
-    let config                = this.parametro.getParametro();
-    Object(config).cc         = this.parametros.value.ccs;
-    Object(config).cc_novo    = this.parametros.value.cc_novo;
+    let config                         = this.parametro.getParametro();
+    Object(config).cc                  = this.parametros.get("chaves.cc")?.value;
+    Object(config).cc_descricao        = this.parametros.value.cc_descricao;
+    Object(config).cc_novo             = this.parametros.get("chaves.cc_novo")?.value;
+    Object(config).ccnovo_descricao    = this.parametros.value.ccnovo_descricao;
     Object(config).grupo      = this.parametros.value.grupos;
     Object(config).situacao   = this.parametros.value.situacoes;
     Object(config).codigo     = this.parametros.value.codigo;
@@ -620,7 +594,6 @@ export class FiltroImoinventarioComponent implements OnInit {
     }
   }
 
-
   onSaveConfig(){
     this.updateParametros();
   }
@@ -628,6 +601,63 @@ export class FiltroImoinventarioComponent implements OnInit {
   onHide(){
     this.setHide();
     this.changeHide.emit(this.hide)
+  }
+
+  onPesquisaCC(){
+    this.searchDialogService.openSearchDialog(CadastroEnum.CC)
+    .beforeClosed()
+    .subscribe((data: SeachDialogData) => {
+
+      if (data){
+        if (data.retornoTodos){
+            this.parametros.patchValue({
+              cc_descricao: "Todos",
+              chaves:{
+                cc : ""
+              }
+            })
+            return;
+        }
+        if (!data.cancelar){
+            this.parametros.patchValue({
+              cc_descricao: `${data.retorno.codigo.replace("#","-")}-${data.retorno.descricao}`,
+              chaves:{
+                cc: data.retorno.codigo
+              }
+            })
+        }
+
+      }
+    });
+
+  }
+
+  onPesquisaCCNovo(){
+    this.searchDialogService.openSearchDialog(CadastroEnum.CC)
+    .beforeClosed()
+    .subscribe((data: SeachDialogData) => {
+
+      if (data){
+        if (data.retornoTodos){
+            this.parametros.patchValue({
+              ccnovo_descricao: "Todos",
+              chaves:{
+                cc_novo : ""
+              }
+            })
+            return;
+        }
+        if (!data.cancelar){
+            this.parametros.patchValue({
+              ccnovo_descricao: `${data.retorno.codigo.replace("#","-")}-${data.retorno.descricao}`,
+              chaves:{
+                cc_novo: data.retorno.codigo
+              }
+            })
+        }
+      }
+    });
+
   }
 
   hasValue(campo: string): boolean {
@@ -638,6 +668,22 @@ export class FiltroImoinventarioComponent implements OnInit {
   }
 
   clearValue(campo: string){
+    if (campo == 'cc_descricao'){
+        this.parametros.patchValue({
+          cc_descricao: "Todos",
+          chaves:{
+            cc : ""
+          }
+        })
+    }
+    if (campo == 'ccnovo_descricao'){
+      this.parametros.patchValue({
+          ccnovo_descricao: "Todos",
+          chaves:{
+          cc_novo : ""
+          }
+      })
+    }
     if (campo == 'descricao')
     this.parametros.patchValue({
       descricao: ''

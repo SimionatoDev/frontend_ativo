@@ -70,6 +70,10 @@
       <mat-icon>person</mat-icon>
       <span>Substituir Ativo</span>
     </button>
+    <button mat-menu-item (click)="onChangeOpcao(getAcoes().Trocar)" *ngIf="barra_trocar">
+      <mat-icon>person</mat-icon>
+      <span>Correção Ativos Celia</span>
+    </button>
         </ng-template>
     </mat-menu>
 </div>

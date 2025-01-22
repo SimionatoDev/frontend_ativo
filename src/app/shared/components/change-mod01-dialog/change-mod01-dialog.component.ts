@@ -63,8 +63,9 @@ export class ChangeMod01DialogComponent implements OnInit {
       paraObs: [{ value: '' }],
       paraGrupo:[{ value: '' }],
       paraCC:[{ value: '' }]
-    });
+      });
      }
+
      ngOnInit(): void {
        this.data.processar = false;
        this.setValue();
